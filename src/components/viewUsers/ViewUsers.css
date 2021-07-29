@@ -1,0 +1,13 @@
+.rows{
+    margin: 0 !important;
+}
+.link{
+    color: white;
+    text-decoration: none;
+}
+.usersContainer{
+    margin-top: 2%;
+}
+.buttonsTd{
+    width: 200px;
+}

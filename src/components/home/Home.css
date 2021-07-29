@@ -1,0 +1,28 @@
+.principalDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.principalRow{
+    background-color: rgb(201, 201, 201);
+    border-radius: 15px;
+    margin: 7% 0 0 0 !important;
+    height: 400px;
+    width: 500px;
+}
+.principalCol{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.link{
+    color: white;
+    text-decoration: none;
+}
+.link:hover{
+    color: white;
+}
+
+.imageRow{
+    margin-top: 12%;
+}

@@ -1,0 +1,18 @@
+.rows{
+    margin: 10% 0 0 0 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.formCol{
+    padding: 30px;
+    background-color: rgb(212, 212, 212);
+    border-radius: 15px;
+}
+.inputRow{
+    margin-bottom: 6px;
+}
+.label{
+    display: flex;
+    align-items: center;
+}
