@@ -16,3 +16,12 @@
     display: flex;
     align-items: center;
 }
+.saveButton{
+    width: 100px;
+}
+.buttonRow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}

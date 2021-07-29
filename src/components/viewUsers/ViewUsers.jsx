@@ -8,10 +8,11 @@ import {faEdit, faTrashAlt} from '@fortawesome/free-solid-svg-icons';
 class ViewUsers extends React.Component {
 
     state = {
-        users: []
+        users: [],
+        userId: ''
     }
 
-    getUsers = async() =>{ 
+    getUsers = async() => { 
         await axios.get('http://localhost:5000/users')
         .then(response => {
             console.log(response)
@@ -19,6 +20,15 @@ class ViewUsers extends React.Component {
         })
         .catch(error => {console.log(error)})
     }
+
+    deleteUser = async() => {
+        await axios.delete('http://localhost:5000/user/' + this.state.userId)
+        .then(response => {
+            console.log(response)
+        })
+        .catch(error => {console.log(error)})
+    }
+
     componentDidMount() {
         this.getUsers();
     }
@@ -48,7 +58,7 @@ class ViewUsers extends React.Component {
                                             <td>{user.email}</td>
                                             <td>{user.creationDate}</td>
                                             <td className="buttonsTd">
-                                                <Button>
+                                                <Button onClick={this.setState()}>
                                                    <FontAwesomeIcon icon={faEdit}/>
                                                 </Button>{' '}
                                                 <Button>
