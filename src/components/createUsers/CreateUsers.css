@@ -1,5 +1,8 @@
+.titleRow{
+    margin: 2% 0 0 2% !important;
+}
 .rows{
-    margin: 10% 0 0 0 !important;
+    margin: 5% 0 0 0 !important;
     display: flex;
     justify-content: center;
     align-items: center;

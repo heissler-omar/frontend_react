@@ -1,70 +1,65 @@
 import React from 'react';
-import './CreateUsers.css'
-import {Row, Col, Input, Button} from 'reactstrap';
 import axios from 'axios';
+import './EditUser.css'
+import {Row, Col, Button, Input} from 'reactstrap';
 // import moment from 'moment';
 
-class CreateUsers extends React.Component {
+class EditUser extends React.Component {
+
     state = {
-        createUser: {
+        updateUser: {
             username: '',
             email: '',
             password: '',
             active: '',
             creationDate: ''
-        }
+        },
+        userId: ''
+    }
+
+    componentDidMount() {
+        this.getUser()
+    }
+
+    getUser = async() => { 
+        var location = window.location.href
+        var id = location.slice(28, -5)
+        this.setState({userId: id})
+        console.log(location)
+        console.log(id)
+        await axios.get('http://localhost:5000/users/' + id)
+        .then(response => {
+            this.setState({updateUser: response.data})
+            console.log(this.state.updateUser)
+        })
+        .catch(error => {console.log(error)})
     }
 
     changeHandler = async e => {
         e.persist();
         await this.setState({
-            createUser: {
-                ...this.state.createUser,
+            updateUser: {
+                ...this.state.updateUser,
                 [e.target.name]: e.target.value
             }
         });
-        console.log(this.state.createUser)
-    }
-    createUser = () => {
-        // var formatedDate = moment(this.state.createUser.creationDate, 'YYYY-MM-DD').format('DD/MM/YYYY')
-        // this.setState({
-        //     createUser: {
-        //         ...this.state.createUser,
-        //         creationDate: moment(this.state.createUser.creationDate, 'YYYY-MM-DD').format('DD/MM/YYYY')
-        //     }
-        // })
-
-        console.log('Fecha que no se quiere cambiar: ', this.state.createUser.creationDate)
-
-        axios.post('http://localhost:5000/users', this.state.createUser).then(response => {
-            console.log(response)
-            
-        }).catch(error => {
-            console.log(error.message)
-        })
+        console.log(this.state.updateUser)
     }
 
-    clearForm = async() => {
-        console.log('Clear')
-        var empty = ''
-        await this.setState({
-            createUser: {
-                ...this.state.createUser,
-                username: empty,
-                email: empty,
-                password: empty,
-                active: empty,
-                creationDate: empty
-            }
+    updateUser = () => {
+        axios.put('http://localhost:5000/users/' + this.state.userId, this.state.updateUser)
+        .then(response => {
+            console.log(response.data)
         })
+        .catch(error => {console.log(error)})
+
+        window.location = '/users/' + this.state.userId
     }
 
     render () {
+        const {username, email, password, active, creationDate} = this.state.updateUser
         return (
             <div>
-                <Row className="titleRow">
-                    <h3>Creación de usuarios</h3>
-                </Row>
                 <Row className="rows">
                     <Col xs="7" className="formCol">
                         <Row className="inputRow">
@@ -72,7 +67,7 @@ class CreateUsers extends React.Component {
                                 Nombre:
                             </Col>
                             <Col>
-                                <Input name="username" onChange={this.changeHandler}></Input>
+                                <Input name="username" value={username} onChange={this.changeHandler}></Input>
                             </Col>
                         </Row>
                         <Row className="inputRow">
@@ -80,7 +75,7 @@ class CreateUsers extends React.Component {
                                 Correo:
                             </Col>
                             <Col>
-                                <Input name="email" onChange={this.changeHandler}></Input>
+                                <Input name="email" value={email} onChange={this.changeHandler}></Input>
                             </Col>
                         </Row>
                         <Row className="inputRow">
@@ -88,7 +83,7 @@ class CreateUsers extends React.Component {
                                 Contraseña:
                             </Col>
                             <Col>
-                                <Input type="password" name="password" onChange={this.changeHandler}></Input>
+                                <Input type="password" name="password" value={password} onChange={this.changeHandler}></Input>
                             </Col>
                         </Row>
                         <Row className="inputRow">
@@ -96,7 +91,7 @@ class CreateUsers extends React.Component {
                                 Usuario activo:
                             </Col>
                             <Col>
-                                <select name="active" onChange={this.changeHandler}>
+                                <select name="active" value={active} onChange={this.changeHandler}>
                                     <option>true</option>
                                     <option>false</option>
                                 </select>
@@ -107,11 +102,11 @@ class CreateUsers extends React.Component {
                                 Fecha:
                             </Col>
                             <Col>
-                                <Input type="date" name="creationDate" onChange={this.changeHandler}></Input>
+                                <Input type="date" name="creationDate" value={creationDate} onChange={this.changeHandler}></Input>
                             </Col>
                         </Row>
                         <Row className="buttonRow">
-                            <Button color="primary" className="saveButton" onClick={() => {this.createUser(); this.clearForm()}}>Guardar</Button>
+                            <Button color="primary" className="saveButton" onClick={() => this.updateUser()}>Guardar</Button>
                         </Row>
                     </Col>
                 </Row>
@@ -120,4 +115,4 @@ class CreateUsers extends React.Component {
     }
 }
 
-export default CreateUsers
+export default EditUser

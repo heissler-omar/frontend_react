@@ -12,6 +12,12 @@ import ViewUsers from './components/viewUsers/ViewUsers';
 import CreateUsers from './components/createUsers/CreateUsers';
 import Home from './components/home/Home';
 import Projects from './components/projects/Projects';
+import ViewUser from './components/viewUser/ViewUser';
+import EditUser from './components/editUser/EditUser';
+import CreateProject from './components/createProject/CreateProject';
+import Project from './components/project/Project';
+import EditProject from './components/editProject/editProject';
+import UserProjects from './components/userProjects/UserProjects';
 
 function App() {
   return (
@@ -36,6 +42,11 @@ function App() {
               </NavLink>
             </Row>
             <Row className="navRows">
+              <NavLink to="/projects/new" className="btn btn-dark" activeClassName="selected">
+                Crear proyecto
+              </NavLink>
+            </Row>
+            <Row className="navRows">
               <NavLink to="/users" className="btn btn-dark" activeClassName="selected">
                 Usuarios
               </NavLink>
@@ -49,8 +60,26 @@ function App() {
 
           <Col className="componentsCol">
             <Switch>
+              <Route path="/users/:id/projects" exact>
+                <UserProjects />
+              </Route>
+              <Route path="/users/:id/edit" exact>
+                <EditUser />
+              </Route>
+              <Route path="/projects/:id/edit" exact>
+                <EditProject />
+              </Route>
               <Route path="/users/new" exact>
                 <CreateUsers />
+              </Route>
+              <Route path="/projects/new" exact>
+                <CreateProject />
+              </Route>
+              <Route path="/users/:id" exact>
+                <ViewUser />
+              </Route>
+              <Route path="/projects/:id" exact>
+                <Project />
               </Route>
               <Route path="/users" exact>
                 <ViewUsers />
